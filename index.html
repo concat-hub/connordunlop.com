@@ -793,42 +793,29 @@
 
   <script>
     (function () {
-      /* ---- Goodreads ---- */
+      /* ---- Goodreads via rss2json ---- */
       var USER_ID = '108402915';
-      var PROXY = 'https://api.allorigins.win/raw?url=';
+      var RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
       var BASE = 'https://www.goodreads.com/review/list_rss/' + USER_ID;
 
-      function parseBooks(xml) {
-        var parser = new DOMParser();
-        var doc = parser.parseFromString(xml, 'text/xml');
-        var items = doc.querySelectorAll('item');
-        return Array.from(items).map(function (item) {
-          var title = item.querySelector('title') ? item.querySelector('title').textContent.trim() : '';
+      function parseItem(item) {
+        var title = item.title || '';
+        var desc = item.description || item.content || '';
 
-          /* author — custom Goodreads element */
-          var authorEl = item.getElementsByTagName('author_name')[0];
-          var author = authorEl ? authorEl.textContent.trim() : '';
+        /* extract author from description: "author: Name<br/>" */
+        var author = '';
+        var authorMatch = desc.match(/author:\s*([^<\n]+)/);
+        if (authorMatch) author = authorMatch[1].trim();
 
-          /* cover image — try custom elements first */
-          var image = '';
-          var imgTags = ['book_large_image_url', 'book_medium_image_url', 'book_image_url', 'book_small_image_url'];
-          for (var i = 0; i < imgTags.length; i++) {
-            var el = item.getElementsByTagName(imgTags[i])[0];
-            if (el && el.textContent.trim()) { image = el.textContent.trim(); break; }
-          }
+        /* extract cover image from description img tag, upsize from _SY75_ to _SY200_ */
+        var image = '';
+        var imgMatch = desc.match(/src="([^"]+)"/);
+        if (imgMatch) {
+          image = imgMatch[1].replace(/_S[XY]\d+_/, '_SY200_');
+        }
 
-          /* fallback: extract img src from description HTML */
-          if (!image) {
-            var descEl = item.querySelector('description');
-            if (descEl) {
-              var match = descEl.textContent.match(/src="([^"]+)"/);
-              if (match) image = match[1];
-            }
-          }
-
-          if (image && image.includes('nophoto')) image = '';
-          return { title: title, author: author, image: image };
-        });
+        if (image && image.includes('nophoto')) image = '';
+        return { title: title, author: author, image: image };
       }
 
       function renderBooks(containerId, books) {
@@ -850,14 +837,15 @@
       }
 
       function loadShelf(shelf, containerId, limit) {
-        var url = PROXY + encodeURIComponent(BASE + '?shelf=' + shelf);
+        var url = RSS2JSON + encodeURIComponent(BASE + '?shelf=' + shelf);
         return fetch(url)
           .then(function (r) {
             if (!r.ok) throw new Error(r.status);
-            return r.text();
+            return r.json();
           })
-          .then(function (xml) {
-            var books = parseBooks(xml);
+          .then(function (data) {
+            if (!data.items) return;
+            var books = data.items.map(parseItem);
             if (limit) books = books.slice(0, limit);
             if (books.length > 0) renderBooks(containerId, books);
           })
