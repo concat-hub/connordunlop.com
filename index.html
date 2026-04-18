@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connor Dunlop</title>
+  <meta name="description" content="Connor Dunlop — AI governance, verification infrastructure, geopolitics. On the founding team of Lucid Computing.">
+  <meta property="og:title" content="Connor Dunlop">
+  <meta property="og:description" content="AI governance, verification infrastructure, geopolitics.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: #333;
+      background: #fff;
+    }
+
+    a {
+      color: #111;
+      text-decoration: underline;
+      text-decoration-color: #ccc;
+      text-underline-offset: 3px;
+      transition: color 0.25s ease, text-decoration-color 0.25s ease;
+    }
+
+    a:hover { color: #8b5cf6; text-decoration-color: #8b5cf6; }
+
+    /* ---- Navigation ---- */
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 100;
+    }
+
+    .nav-name {
+      font-weight: 600;
+      font-size: 15px;
+      color: #111;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    .nav-name:hover { text-decoration: none; }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover { color: #8b5cf6; }
+
+    /* ---- Layout ---- */
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding-top: 100px;
+      scroll-margin-top: 72px;
+    }
+
+    /* ---- Hero ---- */
+
+    #hero {
+      padding-top: 160px;
+      padding-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 44px;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      margin-bottom: 28px;
+      filter: grayscale(15%);
+    }
+
+    .tagline {
+      font-size: 20px;
+      font-weight: 400;
+      color: #555;
+      margin-bottom: 24px;
+    }
+
+    .roles {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .roles p { margin-bottom: 2px; }
+
+    .contact-links {
+      font-size: 15px;
+      color: #888;
+    }
+
+    .contact-links a {
+      color: #666;
+      text-decoration: none;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 1px;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .contact-links a:hover {
+      color: #111;
+      border-color: #111;
+    }
+
+    .contact-sep { margin: 0 6px; color: #ccc; }
+
+    /* ---- Section headings ---- */
+
+    .section-heading {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #111;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 36px;
+    }
+
+    .subsection-heading {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #999;
+      margin-top: 48px;
+      margin-bottom: 20px;
+    }
+
+    .subsection-heading:first-of-type { margin-top: 0; }
+
+    /* ---- About ---- */
+
+    #about p {
+      margin-bottom: 16px;
+    }
+
+    #about p:last-child { margin-bottom: 0; }
+
+    /* ---- Work ---- */
+
+    .work-entry {
+      margin-bottom: 28px;
+    }
+
+    .work-entry:last-child { margin-bottom: 0; }
+
+    .title-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+
+    .entry-title {
+      font-weight: 600;
+      color: #111;
+      font-size: 17px;
+      min-width: 0;
+    }
+
+    .entry-date {
+      flex-shrink: 0;
+    }
+
+    .entry-date {
+      font-size: 14px;
+      color: #999;
+      white-space: nowrap;
+    }
+
+    .entry-desc {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .other-roles {
+      margin-top: 12px;
+    }
+
+    .other-role {
+      margin-bottom: 10px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    .other-role .role-name {
+      font-weight: 500;
+      color: #111;
+    }
+
+    .other-role .role-date {
+      color: #999;
+      font-size: 14px;
+    }
+
+    /* ---- Publications ---- */
+
+    .pub-entry {
+      margin-bottom: 22px;
+    }
+
+    .pub-title {
+      font-weight: 500;
+      color: #111;
+      display: block;
+      line-height: 1.5;
+    }
+
+    a.pub-title {
+      text-decoration: underline;
+      text-decoration-color: #ccc;
+      text-underline-offset: 3px;
+    }
+
+    a.pub-title:hover {
+      text-decoration-color: #111;
+    }
+
+    .pub-meta {
+      font-size: 15px;
+      color: #777;
+      margin-top: 2px;
+    }
+
+    .pub-note {
+      font-size: 14px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    /* ---- Speaking ---- */
+
+    .speaking-entry {
+      margin-bottom: 16px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .speaking-entry .venue {
+      font-weight: 500;
+      color: #111;
+    }
+
+    .speaking-entry .detail {
+      color: #666;
+    }
+
+    /* ---- Projects ---- */
+
+    .project {
+      margin-bottom: 36px;
+    }
+
+    .project:last-child { margin-bottom: 0; }
+
+    .project-name {
+      font-weight: 600;
+      color: #111;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .project-desc {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.65;
+      margin-bottom: 6px;
+    }
+
+    .project-link {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .project-link a {
+      color: #666;
+    }
+
+    .project-link a:hover {
+      color: #111;
+    }
+
+    /* ---- Reading ---- */
+
+    .reading-intro {
+      color: #666;
+      font-size: 16px;
+      margin-bottom: 36px;
+    }
+
+    .book-list {
+      list-style: none;
+    }
+
+    .book-entry {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .book-cover {
+      width: 44px;
+      flex-shrink: 0;
+      border: 1px solid #eee;
+    }
+
+    .book-info {
+      padding-top: 2px;
+    }
+
+    .book-info .book-title {
+      font-weight: 500;
+      color: #111;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .book-info .book-author {
+      font-size: 14px;
+      color: #999;
+      line-height: 1.4;
+    }
+
+    .book-entry-text {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .book-entry-text .book-title {
+      font-weight: 500;
+      color: #111;
+    }
+
+    .book-entry-text .book-author {
+      color: #999;
+      font-size: 15px;
+    }
+
+    /* ---- Footer ---- */
+
+    footer {
+      max-width: 680px;
+      margin: 100px auto 48px;
+      padding: 24px 24px 0;
+      border-top: 1px solid #eee;
+      font-size: 14px;
+      color: #999;
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: #999;
+      text-decoration: none;
+      border-bottom: 1px solid #ddd;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: #666;
+      border-color: #666;
+    }
+
+    /* ---- Side nav ---- */
+
+    .side-nav {
+      position: fixed;
+      left: max(24px, calc((100vw - 680px) / 2 - 168px));
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .side-nav a {
+      font-size: 12px;
+      color: #ccc;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: color 0.25s ease;
+    }
+
+    .side-nav a:hover { color: #8b5cf6; }
+    .side-nav a.active { color: #8b5cf6; font-weight: 500; }
+
+    .side-nav-toggle {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      background: #fff;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      z-index: 51;
+      color: #999;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+
+    .side-nav-toggle:hover { color: #111; border-color: #bbb; }
+
+    /* ---- Responsive ---- */
+
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; }
+      .nav-name { display: none; }
+      .nav-links { width: 100%; justify-content: center; gap: 18px; }
+      .nav-links a { font-size: 13px; }
+      h1 { font-size: 32px; }
+      .tagline { font-size: 18px; }
+      #hero { padding-top: 120px; }
+      section { padding-top: 72px; }
+      .title-line { flex-direction: column; gap: 2px; }
+
+      .side-nav {
+        display: none;
+        position: fixed;
+        left: 24px;
+        bottom: 72px;
+        top: auto;
+        transform: none;
+        background: #fff;
+        border: 1px solid #eee;
+        padding: 16px 20px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      }
+
+      .side-nav.open { display: flex; }
+      .side-nav-toggle { display: flex; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="#" class="nav-name">Connor Dunlop</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#writing">Writing</a>
+      <a href="#speaking">Speaking</a>
+      <a href="#projects">Projects</a>
+      <a href="#reading">Reading</a>
+      <a href="DUNLOP_CV_2026.html" target="_blank">CV</a>
+    </div>
+  </nav>
+
+  <div class="side-nav" id="side-nav">
+    <a href="#hero">Top</a>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#writing">Writing</a>
+    <a href="#speaking">Speaking</a>
+    <a href="#projects">Projects</a>
+    <a href="#reading">Reading</a>
+  </div>
+  <button class="side-nav-toggle" id="side-nav-toggle" aria-label="Navigation">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="5" x2="15" y2="5"/><line x1="3" y1="9" x2="15" y2="9"/><line x1="3" y1="13" x2="15" y2="13"/></svg>
+  </button>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <header id="hero">
+      <img src="ConnorDunlop006.jpg" alt="Connor Dunlop" class="hero-photo">
+      <h1>Connor Dunlop</h1>
+      <p class="tagline">AI governance, verification infrastructure, geopolitics.</p>
+      <div class="roles">
+        <p>On the founding team of <a href="https://lucidcomputing.ai" target="_blank" rel="noopener">Lucid Computing</a>.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:c.dunlop@proton.me">c.dunlop@proton.me</a>
+        <span class="contact-sep">&middot;</span>
+        <a href="https://www.linkedin.com/in/connor-dunlop-61356bb3" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="contact-sep">&middot;</span>
+        <a href="https://x.com/cp_dunlop" target="_blank" rel="noopener">X</a>
+      </div>
+    </header>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about">
+      <h2 class="section-heading">About</h2>
+      <p>I work on how governments and institutions can verify trustworthy behaviour in advanced AI systems &mdash; through policy, through verification infrastructure, and through the physical hardware itself.</p>
+      <p>I head up policy and strategy at <a href="https://lucidcomputing.ai" target="_blank" rel="noopener">Lucid Computing</a>. Lucid was founded on the belief that significant chunks of the economy and government will be run by AI in the near future. Just as the human economy runs on trust &mdash; think proofs of identity like passports, or proofs of reputation like credit scores &mdash; we urgently need to build similar proofs of trust for the AI economy. Lucid is building the hardware-rooted verification infrastructure to make that possible. My role involves ensuring our technology is adapted to the needs of governments seeking to securely deploy advanced AI, and informing what we build through ecosystem engagement and high-level briefings on AI verification technology.</p>
+      <p>Previously I set up and led the EU and global governance programme at the <a href="https://www.adalovelaceinstitute.org" target="_blank" rel="noopener">Ada Lovelace Institute</a>, where my research informed the International AI Safety Report, the EU Code of Practice on General-Purpose AI (GPAI), and the UK government&rsquo;s white paper on AI regulation, among others. Before that I worked in EU public affairs, at the <a href="https://www.unhcr.org/innovation/" target="_blank" rel="noopener">UN Refugee Agency</a>&rsquo;s innovation unit, and on emerging technology at <a href="https://hcss.nl" target="_blank" rel="noopener">The Hague Centre for Strategic Studies</a>.</p>
+      <p>I grew up in Belfast, spent five years in Brussels, and now live in London.</p>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section id="work">
+      <h2 class="section-heading">Work</h2>
+
+      <div class="work-entry">
+        <div class="title-line">
+          <span class="entry-title">Lucid Computing &middot; Policy &amp; Strategy</span>
+          <span class="entry-date">Jul 2025 &mdash; Present</span>
+        </div>
+      </div>
+
+      <div class="work-entry">
+        <div class="title-line">
+          <span class="entry-title">Ada Lovelace Institute &middot; Head of EU &amp; Global Governance</span>
+          <span class="entry-date">Sep 2022 &mdash; Jul 2025</span>
+        </div>
+      </div>
+
+      <div class="work-entry">
+        <div class="title-line">
+          <span class="entry-title">Dentons Global Advisors; Nove Public Affairs &middot; Senior Associate, EU Technology Policy</span>
+          <span class="entry-date">Aug 2020 &mdash; Sep 2022</span>
+        </div>
+      </div>
+
+      <div class="work-entry">
+        <div class="title-line">
+          <span class="entry-title">UN Refugee Agency &middot; Consultant, Innovation Unit</span>
+          <span class="entry-date">Aug 2019 &mdash; Jul 2020</span>
+        </div>
+      </div>
+
+      <div class="work-entry">
+        <div class="title-line">
+          <span class="entry-title">The Hague Centre for Strategic Studies &middot; Assistant Analyst</span>
+          <span class="entry-date">Sep 2018 &mdash; Jun 2019</span>
+        </div>
+      </div>
+
+      <h3 class="subsection-heading">Other</h3>
+      <div class="other-roles">
+        <div class="other-role">
+          <span class="role-name">Fellow</span> &mdash; Newspeak House, London <span class="role-date">present</span>
+        </div>
+        <div class="other-role">
+          <span class="role-name">Fellowship Supervisor</span> &mdash; GovAI, University of Oxford <span class="role-date">2026&ndash;present</span>
+        </div>
+        <div class="other-role">
+          <span class="role-name">Member</span> &mdash; OECD AI Expert Network on AI Incidents <span class="role-date">2025&ndash;present</span>
+        </div>
+        <div class="other-role">
+          <span class="role-name">Adjunct Professor</span> &mdash; ESSCA Ecole de Management <span class="role-date">2023&ndash;2025</span>
+        </div>
+        <div class="other-role">
+          <span class="role-name">Programme Committee</span> &mdash; <a href="https://www.taig-icml.com/committee" target="_blank" rel="noopener">TAIG-ICML 2025</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WRITING ============ -->
+    <section id="writing">
+      <h2 class="section-heading">Writing</h2>
+
+      <h3 class="subsection-heading">Research</h3>
+
+      <div class="pub-entry">
+        <a href="https://www.bloomsbury.com/uk/eu-artificial-intelligence-act-9781509988600/" target="_blank" rel="noopener" class="pub-title">General Purpose AI Models with Systemic Risks</a>
+        <div class="pub-meta">Chapter 23 in <em>The EU Artificial Intelligence Act</em> &middot; Bloomsbury</div>
+        <div class="pub-note">Forthcoming.</div>
+      </div>
+
+      <div class="pub-entry">
+        <span class="pub-title">Hardware-Rooted Trust Anchors for Sovereign AI Processing</span>
+        <div class="pub-meta">Borenovic, Dunlop, Asad, Shah, Leshin, Dunia &middot; ICDS 2025</div>
+        <div class="pub-note">Cryptographic verification of location, identity, and confidentiality in cloud environments.</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://www.interface-eu.org/publications/ai-agent-classification" target="_blank" rel="noopener" class="pub-title">An Autonomy-Based Classification: AI Agents, Liability and Learnings from the UK Automated Vehicles Act</a>
+        <div class="pub-meta">Smakman, Soder, Dunlop &middot; Accepted at three workshops, NeurIPS 2024</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://arxiv.org/abs/2410.04931" target="_blank" rel="noopener" class="pub-title">The Role of Governments in Increasing Interconnected Post-Deployment Monitoring of AI</a>
+        <div class="pub-meta">Bernadi, Stein, Dunlop &middot; SoLaR Workshop, NeurIPS 2024</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://aigi.ox.ac.uk/publications/safety-frameworks-and-standards" target="_blank" rel="noopener" class="pub-title">Safety Frameworks and Standards: A Comparative Analysis to Advance Risk Management of Frontier AI</a>
+        <div class="pub-meta">AIGI, University of Oxford</div>
+      </div>
+
+      <h3 class="subsection-heading">Policy</h3>
+
+      <div class="pub-entry">
+        <a href="https://www.adalovelaceinstitute.org/report/safe-before-sale/" target="_blank" rel="noopener" class="pub-title">Safe Before Sale: Learnings from the FDA&rsquo;s Model of Life Sciences Oversight for Foundation Models</a>
+        <div class="pub-meta">Ada Lovelace Institute</div>
+        <div class="pub-note">Referenced in the inaugural International AI Safety Report.</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://www.adalovelaceinstitute.org/blog/value-chain-general-purpose-ai/" target="_blank" rel="noopener" class="pub-title">The Value Chain of General-Purpose AI</a>
+        <div class="pub-meta">Ada Lovelace Institute</div>
+        <div class="pub-note">Referenced by the UK Government White Paper on AI.</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://www.adalovelaceinstitute.org/blog/an-infrastructure-for-safety-and-trust-in-european-ai/" target="_blank" rel="noopener" class="pub-title">An Infrastructure for Safety and Trust in European AI</a>
+        <div class="pub-meta">Ada Lovelace Institute</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://www.adalovelaceinstitute.org/blog/post-deployment-monitoring-of-ai/" target="_blank" rel="noopener" class="pub-title">Safe Beyond Sale: Post-Deployment Monitoring of AI</a>
+        <div class="pub-meta">Ada Lovelace Institute</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://www.adalovelaceinstitute.org/resource/foundation-models-explainer/" target="_blank" rel="noopener" class="pub-title">Explainer: What Is a Foundation Model?</a>
+        <div class="pub-meta">Ada Lovelace Institute</div>
+        <div class="pub-note">Widely referenced explainer on general-purpose AI.</div>
+      </div>
+
+      <h3 class="subsection-heading">Commentary</h3>
+
+      <div class="pub-entry">
+        <a href="https://sotaletters.substack.com/p/provable-hardware-trust-for-ai" target="_blank" rel="noopener" class="pub-title">Provable Hardware Trust for AI</a>
+        <div class="pub-meta">Op-ed on hardware-rooted verification for AI sovereignty.</div>
+      </div>
+
+      <div class="pub-entry">
+        <a href="https://www.euractiv.com/opinion/regulating-ai-foundation-models-is-crucial-for-innovation/" target="_blank" rel="noopener" class="pub-title">Regulating AI Foundation Models Is Crucial for Innovation</a>
+        <div class="pub-meta">Euractiv &middot; op-ed</div>
+      </div>
+    </section>
+
+    <!-- ============ SPEAKING & MEDIA ============ -->
+    <section id="speaking">
+      <h2 class="section-heading">Speaking &amp; Media</h2>
+
+      <div class="speaking-entry">
+        <span class="venue">Al Jazeera</span> <span class="detail">&mdash; live interview on the implications of test-time compute and DeepSeek for frontier AI development</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue">GenLaw Workshop, ICML 2024</span> <span class="detail">&mdash; speaker</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue">CPDP.ai 2024</span> <span class="detail">&mdash; &lsquo;FLOPs and Beyond: Decoding the AI Act&rsquo;s Systemic Risk Criteria&rsquo;</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue"><a href="https://www.techpolicy.press/an-fda-for-ai/" target="_blank" rel="noopener">TechPolicy.Press</a></span> <span class="detail">&mdash; &lsquo;An FDA for AI?&rsquo; podcast</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue"><a href="https://europeanaifund.org/newspublications/interview-with-connor-dunlop-from-the-ada-lovelace-institute-bringing-new-insights-on-ai-governance/" target="_blank" rel="noopener">European AI Fund</a></span> <span class="detail">&mdash; interview on AI governance</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue"><a href="https://www.techpolicy.press/the-eu-ai-act-enters-final-negotiations/" target="_blank" rel="noopener">TechPolicy.Press</a></span> <span class="detail">&mdash; &lsquo;The EU AI Act Enters Final Negotiations&rsquo; podcast</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue"><a href="https://www.euractiv.com/podcast/european-standards-and-the-ai-act/" target="_blank" rel="noopener">Euractiv</a></span> <span class="detail">&mdash; &lsquo;European Standards and the AI Act&rsquo; podcast</span>
+      </div>
+
+      <div class="speaking-entry">
+        <span class="venue"><a href="https://www.youtube.com/watch?v=LI4jNmosDqE" target="_blank" rel="noopener">Vision Weekend Europe 2024</a></span> <span class="detail">&mdash; &lsquo;An Ecosystem Approach to AI Risk&rsquo;</span>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects">
+      <h2 class="section-heading">Projects</h2>
+
+      <div class="project">
+        <div class="project-name">Lucid Computing</div>
+        <p class="project-desc">A startup building hardware-rooted verification of important properties of AI software, and the security of the hardware they run on. Heading up policy and strategy &mdash; ensuring our technology is adapted to the needs of governments seeking to securely deploy advanced AI.</p>
+        <div class="project-link"><a href="https://lucidcomputing.ai" target="_blank" rel="noopener">lucidcomputing.com</a></div>
+      </div>
+
+      <div class="project">
+        <div class="project-name">Verifiable Compute Foundation</div>
+        <p class="project-desc">Advising and defining the organisational roadmap for a foundation developing reference architectures and red-teaming infrastructure for treaty-verifiable datacentres.</p>
+      </div>
+
+      <div class="project">
+        <div class="project-name">Newspeak House</div>
+        <p class="project-desc">Building an open-source platform to sustain engagement with human-authored writing in the post-AGI era.</p>
+        <div class="project-link"><a href="https://www.nwspk.com" target="_blank" rel="noopener">nwspk.com</a></div>
+      </div>
+
+      <div class="project">
+        <div class="project-name">GovAI Fellowship Supervision</div>
+        <p class="project-desc">Supervising two research fellows at the Centre for the Governance of AI, University of Oxford.</p>
+      </div>
+    </section>
+
+    <!-- ============ READING ============ -->
+    <section id="reading">
+      <h2 class="section-heading">Reading</h2>
+
+      <h3 class="subsection-heading">Currently reading</h3>
+      <div id="currently-reading">
+        <div class="book-entry-text"><span class="book-title">The Complete Stories</span> <span class="book-author">&mdash; Flannery O&rsquo;Connor</span></div>
+        <div class="book-entry-text"><span class="book-title">Democracy in America</span> <span class="book-author">&mdash; Alexis de Tocqueville</span></div>
+        <div class="book-entry-text"><span class="book-title">Seeing Like a State</span> <span class="book-author">&mdash; James C. Scott</span></div>
+        <div class="book-entry-text"><span class="book-title">Middlemarch</span> <span class="book-author">&mdash; George Eliot</span></div>
+        <div class="book-entry-text"><span class="book-title">Inside the Whale and Other Essays</span> <span class="book-author">&mdash; George Orwell</span></div>
+        <div class="book-entry-text"><span class="book-title">Dubliners</span> <span class="book-author">&mdash; James Joyce</span></div>
+      </div>
+
+      <h3 class="subsection-heading">Recently read</h3>
+      <div id="recently-read">
+        <div class="book-entry-text"><span class="book-title">The Name of the Wind</span> <span class="book-author">&mdash; Patrick Rothfuss</span></div>
+        <div class="book-entry-text"><span class="book-title">Pachinko</span> <span class="book-author">&mdash; Min Jin Lee</span></div>
+        <div class="book-entry-text"><span class="book-title">There Is No Antimemetics Division</span> <span class="book-author">&mdash; qntm</span></div>
+        <div class="book-entry-text"><span class="book-title">Fathers and Sons</span> <span class="book-author">&mdash; Ivan Turgenev</span></div>
+        <div class="book-entry-text"><span class="book-title">Notes from the Underground</span> <span class="book-author">&mdash; Fyodor Dostoevsky</span></div>
+        <div class="book-entry-text"><span class="book-title">All About Love</span> <span class="book-author">&mdash; bell hooks</span></div>
+        <div class="book-entry-text"><span class="book-title">East of Eden</span> <span class="book-author">&mdash; John Steinbeck</span></div>
+        <div class="book-entry-text"><span class="book-title">Novacene</span> <span class="book-author">&mdash; James Lovelock</span></div>
+        <div class="book-entry-text"><span class="book-title">My Struggle, Book 1</span> <span class="book-author">&mdash; Karl Ove Knausg&aring;rd</span></div>
+        <div class="book-entry-text"><span class="book-title">Beyond Good and Evil</span> <span class="book-author">&mdash; Friedrich Nietzsche</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Connor Dunlop</p>
+    <p>
+      <a href="mailto:c.dunlop@proton.me">c.dunlop@proton.me</a>
+      <span class="contact-sep">&middot;</span>
+      <a href="https://www.linkedin.com/in/connor-dunlop-61356bb3" target="_blank" rel="noopener">LinkedIn</a>
+      <span class="contact-sep">&middot;</span>
+      <a href="https://x.com/cp_dunlop" target="_blank" rel="noopener">X</a>
+    </p>
+  </footer>
+
+  <script>
+    (function () {
+      /* ---- Goodreads ---- */
+      var USER_ID = '108402915';
+      var PROXY = 'https://api.allorigins.win/raw?url=';
+      var BASE = 'https://www.goodreads.com/review/list_rss/' + USER_ID;
+
+      function parseBooks(xml) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(xml, 'text/xml');
+        var items = doc.querySelectorAll('item');
+        return Array.from(items).map(function (item) {
+          var title = item.querySelector('title') ? item.querySelector('title').textContent.trim() : '';
+
+          /* author — custom Goodreads element */
+          var authorEl = item.getElementsByTagName('author_name')[0];
+          var author = authorEl ? authorEl.textContent.trim() : '';
+
+          /* cover image — try custom elements first */
+          var image = '';
+          var imgTags = ['book_large_image_url', 'book_medium_image_url', 'book_image_url', 'book_small_image_url'];
+          for (var i = 0; i < imgTags.length; i++) {
+            var el = item.getElementsByTagName(imgTags[i])[0];
+            if (el && el.textContent.trim()) { image = el.textContent.trim(); break; }
+          }
+
+          /* fallback: extract img src from description HTML */
+          if (!image) {
+            var descEl = item.querySelector('description');
+            if (descEl) {
+              var match = descEl.textContent.match(/src="([^"]+)"/);
+              if (match) image = match[1];
+            }
+          }
+
+          if (image && image.includes('nophoto')) image = '';
+          return { title: title, author: author, image: image };
+        });
+      }
+
+      function renderBooks(containerId, books) {
+        var container = document.getElementById(containerId);
+        if (!container || books.length === 0) return;
+        container.innerHTML = books.map(function (book) {
+          if (book.image) {
+            return '<div class="book-entry">' +
+              '<img src="' + book.image + '" alt="" class="book-cover" loading="lazy" onerror="this.style.display=\'none\'">' +
+              '<div class="book-info">' +
+              '<span class="book-title">' + book.title + '</span>' +
+              '<span class="book-author">' + book.author + '</span>' +
+              '</div></div>';
+          }
+          return '<div class="book-entry-text">' +
+            '<span class="book-title">' + book.title + '</span> ' +
+            '<span class="book-author">&mdash; ' + book.author + '</span></div>';
+        }).join('');
+      }
+
+      function loadShelf(shelf, containerId, limit) {
+        var url = PROXY + encodeURIComponent(BASE + '?shelf=' + shelf);
+        return fetch(url)
+          .then(function (r) {
+            if (!r.ok) throw new Error(r.status);
+            return r.text();
+          })
+          .then(function (xml) {
+            var books = parseBooks(xml);
+            if (limit) books = books.slice(0, limit);
+            if (books.length > 0) renderBooks(containerId, books);
+          })
+          .catch(function () { /* keep hardcoded fallback */ });
+      }
+
+      loadShelf('currently-reading', 'currently-reading');
+      loadShelf('read', 'recently-read', 10);
+
+      /* ---- Side nav toggle ---- */
+      var toggle = document.getElementById('side-nav-toggle');
+      var sideNav = document.getElementById('side-nav');
+      if (toggle) {
+        toggle.addEventListener('click', function () {
+          sideNav.classList.toggle('open');
+        });
+        sideNav.querySelectorAll('a').forEach(function (a) {
+          a.addEventListener('click', function () {
+            sideNav.classList.remove('open');
+          });
+        });
+      }
+
+      /* ---- Active section tracking ---- */
+      var sectionIds = ['hero', 'about', 'work', 'writing', 'speaking', 'projects', 'reading'];
+      var sideLinks = document.querySelectorAll('.side-nav a');
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var id = entry.target.id;
+            sideLinks.forEach(function (link) {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -75% 0px' });
+
+      sectionIds.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>
