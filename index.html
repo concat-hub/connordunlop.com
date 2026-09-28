@@ -618,7 +618,7 @@
       <div class="pub-entry">
         <a href="https://www.bloomsbury.com/uk/eu-artificial-intelligence-act-9781509988600/" target="_blank" rel="noopener" class="pub-title">General Purpose AI Models with Systemic Risks</a>
         <div class="pub-meta">Chapter 23 in <em>The EU Artificial Intelligence Act</em> &middot; Bloomsbury</div>
-        <div class="pub-note">Forthcoming.</div>
+        <div class="pub-note">Published 2026. <a href="https://www.waterstones.com/book/the-eu-artificial-intelligence-act/gianclaudio-malgieri/gloria-gonz-lez-fuster/9781509988600" target="_blank" rel="noopener">Waterstones</a></div>
       </div>
 
       <div class="pub-entry">
@@ -793,14 +793,14 @@
 
   <script>
     (function () {
-      /* ---- Goodreads via rss2json ---- */
+      /* ---- Goodreads feed (resilient: tries multiple proxies) ---- */
       var USER_ID = '108402915';
-      var RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
-      var BASE = 'https://www.goodreads.com/review/list_rss/' + USER_ID;
+      var FEED_BASE = 'https://www.goodreads.com/review/list_rss/' + USER_ID;
 
-      function parseItem(item) {
-        var title = item.title || '';
-        var desc = item.description || item.content || '';
+      /* turn one feed entry's title + description HTML into a book object */
+      function parseEntry(title, desc) {
+        title = title || '';
+        desc = desc || '';
 
         /* extract author from description: "author: Name<br/>" */
         var author = '';
@@ -816,6 +816,28 @@
 
         if (image && image.includes('nophoto')) image = '';
         return { title: title, author: author, image: image };
+      }
+
+      /* rss2json returns pre-parsed JSON items */
+      function booksFromJson(data) {
+        if (!data || !data.items || !data.items.length) return null;
+        return data.items.map(function (item) {
+          return parseEntry(item.title, item.description || item.content);
+        });
+      }
+
+      /* raw-XML proxies return the RSS document; parse it ourselves */
+      function booksFromXml(text) {
+        var doc = new DOMParser().parseFromString(text, 'text/xml');
+        var items = doc.getElementsByTagName('item');
+        if (!items.length) return null;
+        var out = [];
+        for (var i = 0; i < items.length; i++) {
+          var t = items[i].getElementsByTagName('title')[0];
+          var d = items[i].getElementsByTagName('description')[0];
+          out.push(parseEntry(t && t.textContent, d && d.textContent));
+        }
+        return out;
       }
 
       function renderBooks(containerId, books) {
@@ -837,19 +859,38 @@
       }
 
       function loadShelf(shelf, containerId, limit) {
-        var url = RSS2JSON + encodeURIComponent(BASE + '?shelf=' + shelf);
-        return fetch(url)
-          .then(function (r) {
-            if (!r.ok) throw new Error(r.status);
-            return r.json();
-          })
-          .then(function (data) {
-            if (!data.items) return;
-            var books = data.items.map(parseItem);
+        var feed = FEED_BASE + '?shelf=' + shelf;
+
+        /* try each proxy in turn; first one to return books wins */
+        var attempts = [
+          { url: 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed),
+            read: function (r) { return r.json().then(booksFromJson); } },
+          { url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feed),
+            read: function (r) { return r.text().then(booksFromXml); } },
+          { url: 'https://corsproxy.io/?url=' + encodeURIComponent(feed),
+            read: function (r) { return r.text().then(booksFromXml); } }
+        ];
+
+        function tryAttempt(i) {
+          if (i >= attempts.length) return Promise.reject(new Error('all proxies failed'));
+          return fetch(attempts[i].url)
+            .then(function (r) {
+              if (!r.ok) throw new Error(r.status);
+              return attempts[i].read(r);
+            })
+            .then(function (books) {
+              if (!books || !books.length) throw new Error('empty');
+              return books;
+            })
+            .catch(function () { return tryAttempt(i + 1); });
+        }
+
+        return tryAttempt(0)
+          .then(function (books) {
             if (limit) books = books.slice(0, limit);
             if (books.length > 0) renderBooks(containerId, books);
           })
-          .catch(function () { /* keep hardcoded fallback */ });
+          .catch(function () { /* every proxy failed — keep hardcoded fallback */ });
       }
 
       loadShelf('currently-reading', 'currently-reading');
