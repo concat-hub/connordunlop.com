@@ -19,7 +19,7 @@ Personal website for Connor Dunlop. Hosted on GitHub Pages.
 4. **Publications & Writing** — papers, op-eds, referenced work. Room for future blog posts
 5. **Projects** — living list of current things (Lucid, Verifiable Compute Foundation, Newspeak House platform, GovAI supervision)
 6. **Reading** — currently reading / recently read, pulled from Goodreads (RSS feed + client-side parsing)
-7. **CV** — downloadable PDF link + rendered HTML version
+7. ~~CV~~ — removed Oct 2026; landing page covers it
 
 ## Tech
 
